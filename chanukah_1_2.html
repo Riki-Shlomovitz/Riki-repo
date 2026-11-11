@@ -49,6 +49,15 @@ body{
   overflow-x:hidden;
 }
 #stars{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+/* Magen David lattice: faint gold, quieter in the middle where the content sits */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='rgba(232,178,74,0.55)' stroke-width='1.1' stroke-linejoin='round'%3E%3Cpath d='M42 25 L56.7 50.5 L27.3 50.5 Z'/%3E%3Cpath d='M42 59 L56.7 33.5 L27.3 33.5 Z'/%3E%3Cpath d='M0 -8 L6.9 4 L-6.9 4 Z M0 8 L6.9 -4 L-6.9 -4 Z M84 -8 L90.9 4 L77.1 4 Z M84 8 L90.9 -4 L77.1 -4 Z M0 76 L6.9 88 L-6.9 88 Z M0 92 L6.9 80 L-6.9 80 Z M84 76 L90.9 88 L77.1 88 Z M84 92 L90.9 80 L77.1 80 Z' stroke-width='.9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:84px 84px;
+  opacity:.16;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 45%, rgba(0,0,0,.25) 0%, #000 85%);
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 45%, rgba(0,0,0,.25) 0%, #000 85%);
+}
 .wrap{
   position:relative;z-index:1;
   max-width:1040px;margin:0 auto;
@@ -374,13 +383,25 @@ footer .tiny{font-size:13px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* ---------- Menu ---------- */
+.menu{align-self:center;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:6px;border-radius:999px;background:rgba(20,26,58,.7);border:1px solid var(--line);backdrop-filter:blur(6px)}
+.menu a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px;padding:8px 18px;border-radius:999px;transition:background .2s,color .2s}
+.menu a:hover{background:rgba(232,178,74,.12);color:var(--gold-hi)}
+.menu a[aria-current="page"]{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#2a1a06}
+.menu a:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
 </style>
 </head>
 <body style="margin:0">
-
 <canvas id="stars" aria-hidden="true"></canvas>
 
 <main class="wrap" dir="rtl">
+
+  <nav class="menu fade d1" aria-label="תפריט ראשי">
+    <a href="chanukah_1.html" aria-current="page">החנוכייה</a>
+    <a href="nights.html">לוח הלילות</a>
+  </nav>
+
 
   <header class="hero">
     <span class="eyebrow fade d1">כ״ה בכסלו · שמונה ימים</span>
@@ -509,7 +530,15 @@ footer .tiny{font-size:13px;color:var(--muted)}
     W=cv.width=innerWidth*dpr;H=cv.height=innerHeight*dpr;
     cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
     const n=Math.round(innerWidth*innerHeight/5200);
-    stars=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H*.85,r:(Math.random()*1.2+.2)*dpr,p:Math.random()*Math.PI*2,s:.6+Math.random()*1.6}));
+    stars=Array.from({length:Math.round(n*.6)},()=>({x:Math.random()*W,y:Math.random()*H*.85,r:(Math.random()*1.1+.2)*dpr,p:Math.random()*Math.PI*2,s:.6+Math.random()*1.6}));
+    const m=Math.round(innerWidth*innerHeight/9000);
+    snow=Array.from({length:m},()=>newFlake(true));
+  }
+  let snow=[];
+  function newFlake(anywhere){
+    const depth=Math.random();
+    return {x:Math.random()*W,y:anywhere?Math.random()*H:-10*dpr,r:(.7+depth*2.3)*dpr,
+      vy:(.25+depth*.9)*dpr,ph:Math.random()*6.28,amp:(.2+depth*.5)*dpr,a:.35+depth*.55};
   }
   size();addEventListener('resize',size);
   function draw(t){
@@ -519,7 +548,13 @@ footer .tiny{font-size:13px;color:var(--muted)}
       ctx.fillStyle='rgba(244,234,210,'+(a*.8)+')';
       ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.283);ctx.fill();
     }
-    if(Math.random()<.25 && sparks.length<60){
+    for(const f of snow){
+      f.y+=f.vy;f.ph+=.012;f.x+=Math.sin(f.ph)*f.amp;
+      if(f.y>H+10*dpr){Object.assign(f,newFlake(false));}
+      ctx.fillStyle='rgba(235,242,255,'+f.a+')';
+      ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,6.283);ctx.fill();
+    }
+    if(Math.random()<.14 && sparks.length<40){
       sparks.push({x:Math.random()*W,y:H+10,vy:-(.3+Math.random()*.7)*dpr,vx:(Math.random()-.5)*.3*dpr,r:(Math.random()*1.6+.6)*dpr,l:1});
     }
     for(const p of sparks){
@@ -640,7 +675,7 @@ footer .tiny{font-size:13px;color:var(--muted)}
     {id:'choc',name:'שוקולד',sw:'#6b3a1e',glaze:'linear-gradient(170deg,#8a4b26,#4a230e)'},
     {id:'pink',name:'ציפוי ורוד',sw:'#ff7ac6',glaze:'linear-gradient(170deg,#ffb3dd,#ff5cb4)',spr:true},
     {id:'pist',name:'פיסטוק',sw:'#9bd36a',glaze:'linear-gradient(170deg,#c8ec96,#7bbd44)'},
-    {id:'caramel',name:'קרמל',sw:'#e39a3b',glaze:'linear-gradient(170deg,#f7c06e,#c97420)'},
+    {id:'caramel',name:'קרמל',sw:'#e39a3b',glaze:'repeating-linear-gradient(115deg,transparent 0 9px,rgba(255,248,230,.85) 9px 11px),linear-gradient(170deg,#c9772a,#7e4011)'},
     {id:'rainbow',name:'סוכריות צבעוניות',sw:'#ffffff',glaze:'linear-gradient(170deg,#ffffff,#e9e4f5)',spr:true},
     {id:'blue',name:'ציפוי כחול',sw:'#5b8cff',glaze:'linear-gradient(170deg,#9bb8ff,#3b62e0)',spr:true}
   ];
