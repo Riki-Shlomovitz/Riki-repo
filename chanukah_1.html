@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>אור של חנוכה</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700&display=swap">
+<style>
+/* Layout: לילה כחול עמוק, חנוכייה זוהרת במרכז הבמה, מתחתיה בוחר לילות ולוח סביבון */
+:root{
+  color-scheme: dark;
+  --night:#0b1026;
+  --night-2:#141a3a;
+  --ink:#f4ead2;
+  --muted:#a9a6c4;
+  --gold:#e8b24a;
+  --gold-hi:#ffd98a;
+  --brass:#b98a3a;
+  --oil:#ff9a2e;
+  --blue:#3b5bdb;
+  --c-red:#ff5d73;
+  --c-orange:#ff9f43;
+  --c-yellow:#ffd43b;
+  --c-green:#3fd08f;
+  --c-teal:#2ec4d6;
+  --c-sky:#5b8cff;
+  --c-purple:#a77bff;
+  --c-pink:#ff7ac6;
+  --line:rgba(232,178,74,.22);
+  --panel:rgba(20,26,58,.62);
+  --f-display:"Frank Ruhl Libre","David Libre","Times New Roman",serif;
+  --f-body:"Heebo","Assistant","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--night)}
+body{
+  background:
+    radial-gradient(1200px 600px at 50% 0%, #1b2357 0%, transparent 70%),
+    radial-gradient(800px 500px at 50% 45%, rgba(232,178,74,.10) 0%, transparent 65%),
+    var(--night);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+#stars{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.wrap{
+  position:relative;z-index:1;
+  max-width:1040px;margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block:40px 64px;
+  display:flex;flex-direction:column;gap:56px;
+}
+
+/* ---------- Hero ---------- */
+.hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.eyebrow{
+  font-size:13px;letter-spacing:.32em;color:var(--gold);font-weight:500;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before,.eyebrow::after{content:"";width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.eyebrow::after{transform:scaleX(-1)}
+h1{
+  font-family:var(--f-display);font-weight:900;
+  font-size:clamp(52px, 11vw, 128px);line-height:.95;margin:0;
+  text-wrap:balance;
+  background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--brass) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 28px rgba(255,170,60,.35));
+}
+.sub{margin:0;color:var(--muted);font-size:clamp(16px,2.2vw,19px);max-width:40ch;text-wrap:balance}
+
+/* ---------- Countdown ---------- */
+.count{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.unit{
+  min-width:78px;padding:12px 10px 8px;border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+  border:1px solid var(--line);text-align:center;
+}
+.unit b{display:block;font-family:var(--f-display);font-size:34px;line-height:1;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.unit span{font-size:12px;color:var(--muted);letter-spacing:.08em}
+.count-label{font-size:14px;color:var(--muted);margin:0}
+.count-label strong{color:var(--ink);font-weight:500}
+
+/* ---------- Menorah stage ---------- */
+.stage{
+  position:relative;
+  border-radius:28px;
+  padding:clamp(28px,5vw,56px) clamp(12px,4vw,48px) 28px;
+  background:
+    radial-gradient(60% 70% at 50% 40%, rgba(255,160,60,.16), transparent 70%),
+    linear-gradient(180deg,var(--panel),rgba(11,16,38,.4));
+  border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+  overflow:hidden;
+}
+.stage::after{ /* window frame glow line */
+  content:"";position:absolute;inset:auto 10% 0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.6;
+}
+.menorah{position:relative;max-width:620px;margin:0 auto}
+.lights{
+  display:flex;direction:rtl;align-items:flex-end;justify-content:space-between;
+  padding:0 2.5%;position:relative;z-index:2;
+}
+.slot{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
+.slot.shamash{transform:translateY(-34px)}
+.flame-wrap{height:46px;width:100%;display:flex;justify-content:center;align-items:flex-end;position:relative}
+.glow{
+  position:absolute;bottom:-6px;width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,190,90,.55) 0%,rgba(255,140,40,.18) 35%,transparent 70%);
+  opacity:0;transform:scale(.4);transition:opacity .6s, transform .6s;pointer-events:none;
+}
+.flame{
+  width:16px;height:30px;position:relative;
+  border-radius:50% 50% 50% 50% / 62% 62% 38% 38%;
+  background:radial-gradient(ellipse at 50% 78%, #fff 0%, #fff6c8 18%, #ffcf4d 42%, #ff8a1f 70%, rgba(255,80,20,0) 100%);
+  transform-origin:50% 100%;
+  opacity:0;transform:scale(0);
+  transition:opacity .35s, transform .45s cubic-bezier(.3,1.6,.5,1);
+  filter:blur(.3px);
+}
+.flame::after{ /* blue core */
+  content:"";position:absolute;left:50%;bottom:2px;width:6px;height:8px;margin-left:-3px;
+  border-radius:50%;background:radial-gradient(circle,rgba(90,130,255,.9),transparent 70%);
+}
+.slot.lit .flame{opacity:1;transform:scale(1);animation:flicker 1.6s ease-in-out infinite alternate}
+.slot.lit .glow{opacity:1;transform:scale(1);animation:breathe 2.8s ease-in-out infinite}
+.slot:nth-child(2n) .flame{animation-duration:1.9s}
+.slot:nth-child(3n) .flame{animation-duration:1.35s}
+@keyframes flicker{
+  0%{transform:scale(1) rotate(-2deg) skewX(1deg)}
+  25%{transform:scale(1.04,.96) rotate(1.5deg)}
+  50%{transform:scale(.97,1.06) rotate(-1deg) skewX(-2deg)}
+  75%{transform:scale(1.03,.98) rotate(2deg)}
+  100%{transform:scale(.98,1.05) rotate(-1.5deg) skewX(1deg)}
+}
+@keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
+.wick{width:2px;height:7px;background:#2b1d10;border-radius:1px}
+.candle{
+  width:clamp(12px,3vw,20px);height:clamp(70px,13vw,96px);border-radius:3px 3px 2px 2px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.0) 0 7px, rgba(255,255,255,.22) 7px 10px),
+    linear-gradient(90deg, var(--c1), var(--c2) 55%, var(--c1));
+  box-shadow:inset 0 -6px 10px rgba(0,0,0,.25);
+  position:relative;
+}
+.candle::before{ /* melted top */
+  content:"";position:absolute;top:-2px;left:-1px;right:-1px;height:6px;border-radius:50%;
+  background:var(--c2);filter:brightness(1.15);
+}
+.cup{
+  width:clamp(22px,5vw,34px);height:12px;margin-top:-1px;
+  background:linear-gradient(180deg,var(--gold-hi),var(--brass));
+  border-radius:2px 2px 50% 50% / 2px 2px 100% 100%;
+  box-shadow:0 2px 0 rgba(0,0,0,.3);
+}
+.body-svg{display:block;width:100%;height:auto;margin-top:-2px;position:relative;z-index:1}
+
+/* ---------- Night picker ---------- */
+.picker{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.picker p{margin:0;font-size:14px;color:var(--muted)}
+.nights{display:flex;direction:rtl;gap:8px;flex-wrap:wrap;justify-content:center}
+.nights button{
+  font-family:var(--f-display);font-weight:700;font-size:20px;
+  width:48px;height:48px;border-radius:50%;cursor:pointer;
+  color:var(--ink);background:rgba(255,255,255,.04);
+  border:1px solid var(--line);transition:all .25s;
+}
+.nights button:hover{border-color:var(--gold);color:var(--gold-hi);transform:translateY(-2px)}
+.nights button{border-color:var(--bc,var(--line))}
+.nights button:hover{border-color:var(--bc)}
+.nights button[aria-pressed="true"]{
+  background:radial-gradient(circle at 50% 35%,#fff 0%,var(--bc) 55%);
+  color:#1a1030;border-color:transparent;box-shadow:0 0 22px var(--bc);
+}
+.nights button:focus-visible,.btn:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+.night-name{font-family:var(--f-display);font-size:24px;color:var(--gold-hi);margin:0;min-height:1.4em}
+
+/* ---------- Lower grid ---------- */
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.card{
+  border-radius:24px;padding:28px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(20,26,58,.7),rgba(11,16,38,.55));
+  min-width:0;
+}
+.card h2{font-family:var(--f-display);font-weight:700;font-size:30px;margin:0 0 6px;color:var(--gold-hi)}
+.card .lead{margin:0 0 20px;color:var(--muted);font-size:15px}
+
+/* Dreidel */
+.dreidel-zone{display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center}
+.scene{width:120px;height:190px;perspective:600px;display:flex;justify-content:center}
+.dreidel{position:relative;width:90px;height:190px;transform-style:preserve-3d;transform:rotateX(-12deg) rotateY(0deg)}
+.handle{
+  position:absolute;top:0;left:50%;width:14px;height:42px;margin-left:-7px;border-radius:6px 6px 3px 3px;
+  background:linear-gradient(90deg,var(--brass),var(--gold-hi),var(--brass));
+}
+.face{
+  position:absolute;top:40px;left:0;width:90px;height:90px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-weight:900;font-size:56px;color:#fff8e1;
+  background:linear-gradient(160deg,#4c6ef5,#2541b2);
+  border:2px solid rgba(255,217,138,.55);
+  backface-visibility:hidden;
+  text-shadow:0 2px 0 rgba(0,0,0,.25);
+}
+.f0{transform:rotateY(0deg) translateZ(45px);background:linear-gradient(160deg,#ff8a9a,#e63950)}
+.f1{transform:rotateY(90deg) translateZ(45px);background:linear-gradient(160deg,#6be3a8,#1f9e64)}
+.f2{transform:rotateY(180deg) translateZ(45px);background:linear-gradient(160deg,#7aa2ff,#2f55d4)}
+.f3{transform:rotateY(270deg) translateZ(45px);background:linear-gradient(160deg,#c3a0ff,#7a45e0)}
+.tip{
+  position:absolute;top:130px;left:0;width:90px;height:56px;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  background:linear-gradient(90deg,#1c3290,#3b5bdb,#1c3290);
+}
+.result{display:flex;flex-direction:column;gap:12px;align-items:flex-start;min-width:0}
+.result .letter{font-family:var(--f-display);font-size:64px;line-height:1;color:var(--gold-hi);min-height:64px}
+.result .word{font-size:18px;color:var(--ink);min-height:1.6em}
+.btn{
+  font-family:var(--f-body);font-weight:700;font-size:16px;cursor:pointer;
+  padding:12px 26px;border-radius:999px;border:0;color:#2a1a06;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+  box-shadow:0 8px 24px rgba(232,178,74,.3);transition:transform .2s, box-shadow .2s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(232,178,74,.45)}
+.btn:disabled{opacity:.6;cursor:default;transform:none}
+.tally{font-size:13px;color:var(--muted)}
+.tally b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* Letters legend */
+.legend{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.legend div{
+  text-align:center;padding:12px 4px;border-radius:14px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);
+  transition:all .3s;
+}
+.legend div.on{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 18%,transparent);transform:translateY(-3px)}
+.legend b{display:block;font-family:var(--f-display);font-size:30px;color:var(--lc);line-height:1.1}
+.legend div:nth-child(1){--lc:var(--c-red)}
+.legend div:nth-child(2){--lc:var(--c-green)}
+.legend div:nth-child(3){--lc:var(--c-sky)}
+.legend div:nth-child(4){--lc:var(--c-purple)}
+
+/* Bunting */
+.bunting{display:flex;justify-content:center;gap:6px;margin-top:4px;flex-wrap:wrap;max-width:100%}
+.bunting i{
+  width:22px;height:26px;clip-path:polygon(0 0,100% 0,50% 100%);
+  background:var(--fc);transform-origin:50% 0;
+  animation:sway 3s ease-in-out infinite alternate;
+}
+.bunting i:nth-child(odd){animation-delay:-1.4s}
+@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+h1{background:linear-gradient(100deg,var(--c-yellow) 0%,var(--gold-hi) 30%,var(--c-orange) 60%,var(--c-pink) 100%);-webkit-background-clip:text;background-clip:text}
+
+/* ---------- Sufganiyot ---------- */
+.donuts-card{
+  background:
+    radial-gradient(70% 90% at 100% 0%, rgba(255,122,198,.16), transparent 60%),
+    radial-gradient(60% 80% at 0% 100%, rgba(63,208,143,.14), transparent 60%),
+    linear-gradient(180deg,rgba(20,26,58,.75),rgba(11,16,38,.6));
+  border-color:rgba(255,122,198,.3);
+}
+.donuts-card h2{background:linear-gradient(90deg,var(--c-pink),var(--c-orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.donut-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.eaten{
+  display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;
+  background:rgba(255,122,198,.12);border:1px solid rgba(255,122,198,.35);font-size:14px;
+}
+.eaten b{font-family:var(--f-display);font-size:26px;color:var(--c-pink);font-variant-numeric:tabular-nums;line-height:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 22px}
+.chip{
+  font-family:var(--f-body);font-size:14px;font-weight:500;cursor:pointer;
+  padding:7px 14px;border-radius:999px;color:var(--ink);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
+  display:inline-flex;align-items:center;gap:8px;transition:all .2s;
+}
+.chip i{width:14px;height:14px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.chip:hover{border-color:var(--sw)}
+.chip[aria-pressed="true"]{background:color-mix(in srgb,var(--sw) 22%,transparent);border-color:var(--sw)}
+.chip:focus-visible,.donut:focus-visible{outline:2px solid var(--c-pink);outline-offset:3px}
+.tray{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,2.4vw,22px);
+  padding:22px;border-radius:999px/60px;
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.10),rgba(255,255,255,.02) 70%);
+  border:1px solid rgba(255,255,255,.08);
+}
+@media (max-width:640px){.tray{grid-template-columns:repeat(3,1fr);border-radius:28px}}
+.donut{
+  position:relative;aspect-ratio:1;max-width:100%;border:0;padding:0;cursor:pointer;background:none;
+  border-radius:50%;
+  transition:transform .25s;
+  animation:pop .5s cubic-bezier(.3,1.6,.5,1) both;
+}
+.donut:hover{transform:translateY(-4px) rotate(-4deg)}
+@keyframes pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+.dough{
+  position:absolute;inset:0;border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,rgba(255,240,200,.55),transparent 35%),
+    radial-gradient(circle at 50% 50%,#f0b768 0%,#d98a3d 55%,#a45a1e 85%,#7a3f12 100%);
+  box-shadow:0 10px 18px rgba(0,0,0,.4);
+  overflow:hidden;
+}
+.dough::after{ /* pale fry band */
+  content:"";position:absolute;left:-5%;right:-5%;top:62%;height:12%;
+  background:linear-gradient(180deg,rgba(255,236,190,.0),rgba(255,236,190,.75),rgba(255,236,190,.0));
+}
+.glaze{
+  position:absolute;left:4%;right:4%;top:3%;height:58%;
+  border-radius:50% 50% 46% 54% / 62% 62% 38% 38%;
+  background:var(--glaze);
+  box-shadow:inset 0 -4px 6px rgba(0,0,0,.15), inset 0 4px 6px rgba(255,255,255,.35);
+}
+.glaze.sugar{
+  background:
+    radial-gradient(circle,#fff 1px,transparent 1.6px) 0 0/7px 7px,
+    radial-gradient(circle,rgba(255,255,255,.9) 1px,transparent 1.6px) 3px 4px/9px 9px,
+    rgba(255,255,255,.55);
+  box-shadow:none;
+}
+.jelly{
+  position:absolute;left:50%;top:22%;width:24%;height:16%;margin-left:-12%;
+  border-radius:50%;background:radial-gradient(circle at 40% 35%,#ff9aa8,#d4142e 60%,#8c0a1d);
+  box-shadow:0 2px 3px rgba(0,0,0,.3);
+}
+.sprinkle{position:absolute;width:3px;height:9px;border-radius:2px}
+.donut[data-bite="1"] .dough-wrap{-webkit-mask:radial-gradient(circle at 92% 14%,transparent 21%,#000 22%);mask:radial-gradient(circle at 92% 14%,transparent 21%,#000 22%)}
+.donut[data-bite="2"] .dough-wrap{
+  -webkit-mask:radial-gradient(circle at 92% 14%,transparent 21%,#000 22%),radial-gradient(circle at 70% 2%,transparent 22%,#000 23%);
+  -webkit-mask-composite:source-in;
+  mask:radial-gradient(circle at 92% 14%,transparent 21%,#000 22%),radial-gradient(circle at 70% 2%,transparent 22%,#000 23%);
+  mask-composite:intersect;
+}
+.dough-wrap{position:absolute;inset:0;transition:transform .5s,opacity .5s}
+.donut.gone .dough-wrap{transform:scale(.2) rotate(40deg);opacity:0}
+.crumb{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:50}
+.donut-hint{margin:14px 0 0;font-size:13px;color:var(--muted);text-align:center}
+.legend span{font-size:14px;color:var(--muted)}
+
+/* Blessing */
+.blessing p{
+  font-family:var(--f-display);font-size:clamp(19px,2.4vw,22px);line-height:1.9;margin:0 0 16px;color:var(--ink);
+}
+.blessing .small{font-family:var(--f-body);font-size:13px;color:var(--muted);margin:0}
+.copy-row{display:flex;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap}
+.btn.ghost{background:transparent;color:var(--gold-hi);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold)}
+.toast{font-size:13px;color:var(--gold-hi);opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+
+/* Footer */
+footer{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+footer .big{font-family:var(--f-display);font-weight:900;font-size:clamp(30px,6vw,52px);color:var(--gold);letter-spacing:.02em}
+footer .tiny{font-size:13px;color:var(--muted)}
+
+/* Intro sequence */
+.fade{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.d1{animation-delay:.1s}.d2{animation-delay:.25s}.d3{animation-delay:.4s}.d4{animation-delay:.55s}
+@keyframes rise{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+@media (max-width:480px){
+  .nights button{width:42px;height:42px;font-size:18px}
+  .unit{min-width:66px}.unit b{font-size:28px}
+  .slot.shamash{transform:translateY(-24px)}
+  .card{padding:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body style="margin:0">
+
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<main class="wrap" dir="rtl">
+
+  <header class="hero">
+    <span class="eyebrow fade d1">כ״ה בכסלו · שמונה ימים</span>
+    <h1 class="fade d2">אור של חנוכה</h1>
+    <div class="bunting fade d2" id="bunting" aria-hidden="true"></div>
+    <p class="sub fade d3">בחרו לילה, הדליקו את החנוכייה, סובבו את הסביבון ותנו ביס בסופגנייה.</p>
+    <div class="fade d4" style="display:flex;flex-direction:column;gap:6px;align-items:center">
+      <div class="count" id="count" aria-live="polite">
+        <div class="unit"><b id="cd-d">00</b><span>ימים</span></div>
+        <div class="unit"><b id="cd-h">00</b><span>שעות</span></div>
+        <div class="unit"><b id="cd-m">00</b><span>דקות</span></div>
+        <div class="unit"><b id="cd-s">00</b><span>שניות</span></div>
+      </div>
+      <p class="count-label" id="count-label">עד <strong>ערב חנוכה</strong> · יום שישי, 4 בדצמבר 2026</p>
+    </div>
+  </header>
+
+  <section class="stage" aria-label="חנוכייה">
+    <div class="menorah">
+      <div class="lights" id="lights"></div>
+      <svg class="body-svg" viewBox="0 0 600 200" aria-hidden="true">
+        <defs>
+          <linearGradient id="g-brass" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#ffd98a"/>
+            <stop offset=".5" stop-color="#e8b24a"/>
+            <stop offset="1" stop-color="#8a6324"/>
+          </linearGradient>
+          <linearGradient id="g-brass-h" x1="0" x2="1">
+            <stop offset="0" stop-color="#8a6324"/>
+            <stop offset=".5" stop-color="#ffd98a"/>
+            <stop offset="1" stop-color="#8a6324"/>
+          </linearGradient>
+        </defs>
+        <!-- main bar -->
+        <rect x="10" y="0" width="580" height="16" rx="8" fill="url(#g-brass)"/>
+        <!-- arches -->
+        <path d="M60 16 Q300 120 540 16" fill="none" stroke="url(#g-brass-h)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M120 16 Q300 90 480 16" fill="none" stroke="url(#g-brass-h)" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+        <path d="M190 16 Q300 62 410 16" fill="none" stroke="url(#g-brass-h)" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+        <!-- stem -->
+        <rect x="290" y="14" width="20" height="140" rx="6" fill="url(#g-brass-h)"/>
+        <circle cx="300" cy="70" r="12" fill="url(#g-brass)"/>
+        <circle cx="300" cy="112" r="9" fill="url(#g-brass)"/>
+        <!-- base -->
+        <path d="M230 186 Q300 140 370 186 Z" fill="url(#g-brass)"/>
+        <rect x="210" y="184" width="180" height="12" rx="6" fill="url(#g-brass)"/>
+      </svg>
+    </div>
+
+    <div class="picker">
+      <p class="night-name" id="night-name">נר ראשון</p>
+      <div class="nights" id="nights" role="group" aria-label="בחירת לילה"></div>
+      <p>הנר החדש בכל לילה נוסף משמאל ומודלק ראשון</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <h2>סביבון סוב סוב</h2>
+      <p class="lead">לחצו על הכפתור ונראה על איזו אות הוא ייפול.</p>
+      <div class="dreidel-zone">
+        <div class="scene">
+          <div class="dreidel" id="dreidel">
+            <div class="handle"></div>
+            <div class="face f0">נ</div>
+            <div class="face f1">ג</div>
+            <div class="face f2">ה</div>
+            <div class="face f3">פ</div>
+            <div class="tip"></div>
+          </div>
+        </div>
+        <div class="result">
+          <div class="letter" id="r-letter">?</div>
+          <div class="word" id="r-word">הסביבון מחכה לכם</div>
+          <button class="btn" id="spin" type="button">סובבו את הסביבון</button>
+          <div class="tally">סיבובים: <b id="spins">0</b></div>
+        </div>
+      </div>
+      <div class="legend" id="legend">
+        <div data-i="0"><b>נ</b><span>נס</span></div>
+        <div data-i="1"><b>ג</b><span>גדול</span></div>
+        <div data-i="2"><b>ה</b><span>היה</span></div>
+        <div data-i="3"><b>פ</b><span>פה</span></div>
+      </div>
+    </article>
+
+    <article class="card blessing">
+      <h2>ברכת ההדלקה</h2>
+      <p class="lead">נאמרת לפני הדלקת הנרות.</p>
+      <p id="bracha">בָּרוּךְ אַתָּה ה׳ אֱלֹקֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר חֲנֻכָּה.</p>
+      <p class="small">בלילה הראשון מוסיפים את ברכת ״שעשה ניסים״ ואת ברכת ״שהחיינו״.</p>
+      <div class="copy-row">
+        <button class="btn ghost" id="copy" type="button">העתקת הברכה</button>
+        <span class="toast" id="toast" role="status">הועתק</span>
+      </div>
+    </article>
+  </section>
+
+  <section class="card donuts-card" aria-labelledby="donuts-title">
+    <div class="donut-head">
+      <div>
+        <h2 id="donuts-title">מגש הסופגניות</h2>
+        <p class="lead" style="margin:0">שלושה ביסים, והסופגנייה נגמרת. מיד מגיעה חדשה.</p>
+      </div>
+      <div class="eaten" role="status">סופגניות שנאכלו <b id="eaten">0</b></div>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="בחירת ציפוי לסופגניות הבאות"></div>
+    <div class="tray" id="tray"></div>
+    <p class="donut-hint">לחצו על סופגנייה כדי לנגוס בה. הציפוי שתבחרו ילך לסופגניות החדשות.</p>
+  </section>
+
+  <footer>
+    <div class="big">נס גדול היה פה</div>
+    <div class="tiny">חנוכה שמח ומואר</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- stars + rising sparks ---------- */
+  const cv = document.getElementById('stars'), ctx = cv.getContext('2d');
+  let W,H,stars=[],sparks=[],dpr=Math.min(devicePixelRatio||1,2);
+  function size(){
+    W=cv.width=innerWidth*dpr;H=cv.height=innerHeight*dpr;
+    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+    const n=Math.round(innerWidth*innerHeight/5200);
+    stars=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H*.85,r:(Math.random()*1.2+.2)*dpr,p:Math.random()*Math.PI*2,s:.6+Math.random()*1.6}));
+  }
+  size();addEventListener('resize',size);
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      const a=.35+.65*Math.abs(Math.sin(s.p+t/1000*s.s*.6));
+      ctx.fillStyle='rgba(244,234,210,'+(a*.8)+')';
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.283);ctx.fill();
+    }
+    if(Math.random()<.25 && sparks.length<60){
+      sparks.push({x:Math.random()*W,y:H+10,vy:-(.3+Math.random()*.7)*dpr,vx:(Math.random()-.5)*.3*dpr,r:(Math.random()*1.6+.6)*dpr,l:1});
+    }
+    for(const p of sparks){
+      p.x+=p.vx+Math.sin((p.y+t*.05)/60)*.2;p.y+=p.vy;p.l-=.0025;
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+      p.h=p.h??[40,40,350,150,190,220,270,320][Math.floor(Math.random()*8)];
+      g.addColorStop(0,'hsla('+p.h+',100%,72%,'+(.75*p.l)+')');g.addColorStop(1,'hsla('+p.h+',100%,60%,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*4,0,6.283);ctx.fill();
+    }
+    sparks=sparks.filter(p=>p.l>0&&p.y>-20);
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+
+  /* ---------- menorah ---------- */
+  const palettes=[['#e63950','#ff8a9a'],['#f27b1a','#ffb870'],['#e6b800','#ffe270'],['#1f9e64','#6be3a8'],['#1aa3b5','#7fe3ef'],['#2f55d4','#8aa8ff'],['#7a45e0','#c3a0ff'],['#d9418f','#ff9fd3']];
+  const btnColors=['#ff5d73','#ff9f43','#ffd43b','#3fd08f','#2ec4d6','#5b8cff','#a77bff','#ff7ac6'];
+  const bunting=document.getElementById('bunting');
+  for(let i=0;i<16;i++){const f=document.createElement('i');f.style.setProperty('--fc',btnColors[i%8]);bunting.appendChild(f);}
+  const lights=document.getElementById('lights');
+  const slots=[]; // index 1..8 => position from right
+  const mk=(cls,pal)=>{
+    const s=document.createElement('div');s.className='slot '+cls;
+    s.innerHTML='<div class="flame-wrap"><div class="glow"></div><div class="flame"></div></div><div class="wick"></div><div class="candle" style="--c1:'+pal[0]+';--c2:'+pal[1]+'"></div><div class="cup"></div>';
+    return s;
+  };
+  // RTL flex: first child = rightmost. Order: 1,2,3,4,shamash,5,6,7,8
+  for(let i=1;i<=8;i++){
+    if(i===5){const sh=mk('shamash',['#f5d27a','#fff1c4']);lights.appendChild(sh);slots.shamash=sh;}
+    const s=mk('',palettes[i-1]);lights.appendChild(s);slots[i]=s;
+  }
+
+  const names=['','נר ראשון','נר שני','נר שלישי','נר רביעי','נר חמישי','נר שישי','נר שביעי','נר שמיני · זאת חנוכה'];
+  const nightsEl=document.getElementById('nights');
+  let timers=[];
+  function light(n){
+    timers.forEach(clearTimeout);timers=[];
+    for(let i=1;i<=8;i++) slots[i].classList.remove('lit');
+    slots.shamash.classList.remove('lit');
+    document.getElementById('night-name').textContent=names[n];
+    [...nightsEl.children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.n==n));
+    const step=reduce?0:380;
+    timers.push(setTimeout(()=>slots.shamash.classList.add('lit'),reduce?0:150));
+    // newest (leftmost) first: n, n-1, ... 1
+    for(let k=0;k<n;k++){
+      const idx=n-k;
+      timers.push(setTimeout(()=>slots[idx].classList.add('lit'),(reduce?0:150)+step*(k+1)));
+    }
+  }
+  for(let i=1;i<=8;i++){
+    const b=document.createElement('button');b.type='button';b.id='night-'+i;b.dataset.n=i;
+    b.textContent='אבגדהוזח'[i-1]+"׳";
+    b.setAttribute('aria-label',names[i]);
+    b.style.setProperty('--bc',btnColors[i-1]);
+    b.addEventListener('click',()=>light(i));
+    nightsEl.appendChild(b);
+  }
+
+  /* ---------- countdown ---------- */
+  const start=new Date('2026-12-04T16:00:00+02:00').getTime();
+  const end=start+8*864e5;
+  const pad=n=>String(n).padStart(2,'0');
+  function tick(){
+    const now=Date.now();
+    const lab=document.getElementById('count-label');
+    if(now<start){
+      let d=Math.max(0,start-now)/1000;
+      document.getElementById('cd-d').textContent=pad(Math.floor(d/86400));
+      document.getElementById('cd-h').textContent=pad(Math.floor(d%86400/3600));
+      document.getElementById('cd-m').textContent=pad(Math.floor(d%3600/60));
+      document.getElementById('cd-s').textContent=pad(Math.floor(d%60));
+    } else if(now<end){
+      document.getElementById('count').hidden=true;
+      const night=Math.min(8,Math.floor((now-start)/864e5)+1);
+      lab.innerHTML='<strong>חנוכה שמח!</strong> הלילה מדליקים '+names[night];
+    } else {
+      document.getElementById('count').hidden=true;
+      lab.innerHTML='<strong>חנוכה שמח!</strong>';
+    }
+  }
+  tick();setInterval(tick,1000);
+
+  // initial night: current night if during Chanukah, else full menorah for the show
+  const now=Date.now();
+  const initial=(now>=start&&now<end)?Math.min(8,Math.floor((now-start)/864e5)+1):8;
+  light(initial);
+
+  /* ---------- dreidel ---------- */
+  const words=['נס','גדול','היה','פה'];
+  const letters=['נ','ג','ה','פ'];
+  const dr=document.getElementById('dreidel'),btn=document.getElementById('spin');
+  const legend=[...document.querySelectorAll('#legend div')];
+  let angle=0,count=0;
+  btn.addEventListener('click',()=>{
+    btn.disabled=true;
+    document.getElementById('r-letter').textContent='…';
+    document.getElementById('r-word').textContent='מסתובב…';
+    legend.forEach(l=>l.classList.remove('on'));
+    const face=Math.floor(Math.random()*4);
+    const base=Math.ceil(angle/360)*360 + 360*(5+Math.floor(Math.random()*3));
+    angle=base - face*90;
+    const dur=reduce?0:2600;
+    dr.style.transition=reduce?'none':'transform '+dur+'ms cubic-bezier(.15,.7,.2,1)';
+    dr.style.transform='rotateX(-12deg) rotateY('+angle+'deg)';
+    setTimeout(()=>{
+      document.getElementById('r-letter').textContent=letters[face];
+      document.getElementById('r-word').textContent=words[face];
+      legend[face].classList.add('on');
+      document.getElementById('spins').textContent=++count;
+      btn.disabled=false;
+    },dur+60);
+  });
+
+  /* ---------- sufganiyot ---------- */
+  const toppings=[
+    {id:'surprise',name:'הפתעה',sw:'conic-gradient(#ff5d73,#ffd43b,#3fd08f,#5b8cff,#a77bff,#ff5d73)'},
+    {id:'sugar',name:'אבקת סוכר',sw:'#ffffff'},
+    {id:'choc',name:'שוקולד',sw:'#6b3a1e',glaze:'linear-gradient(170deg,#8a4b26,#4a230e)'},
+    {id:'pink',name:'ציפוי ורוד',sw:'#ff7ac6',glaze:'linear-gradient(170deg,#ffb3dd,#ff5cb4)',spr:true},
+    {id:'pist',name:'פיסטוק',sw:'#9bd36a',glaze:'linear-gradient(170deg,#c8ec96,#7bbd44)'},
+    {id:'caramel',name:'קרמל',sw:'#e39a3b',glaze:'linear-gradient(170deg,#f7c06e,#c97420)'},
+    {id:'rainbow',name:'סוכריות צבעוניות',sw:'#ffffff',glaze:'linear-gradient(170deg,#ffffff,#e9e4f5)',spr:true},
+    {id:'blue',name:'ציפוי כחול',sw:'#5b8cff',glaze:'linear-gradient(170deg,#9bb8ff,#3b62e0)',spr:true}
+  ];
+  const sprColors=['#ff5d73','#ffd43b','#3fd08f','#2ec4d6','#a77bff','#ff9f43','#ffffff'];
+  let chosen='surprise',eaten=0;
+  const chips=document.getElementById('chips'),tray=document.getElementById('tray');
+  toppings.forEach(t=>{
+    const c=document.createElement('button');c.type='button';c.className='chip';c.id='top-'+t.id;
+    c.style.setProperty('--sw',t.sw);c.innerHTML='<i></i>'+t.name;
+    c.setAttribute('aria-pressed',t.id===chosen);
+    c.addEventListener('click',()=>{chosen=t.id;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x===c));});
+    chips.appendChild(c);
+  });
+  function pickTopping(){
+    if(chosen!=='surprise') return toppings.find(t=>t.id===chosen);
+    const pool=toppings.slice(1);return pool[Math.floor(Math.random()*pool.length)];
+  }
+  function makeDonut(slot){
+    const t=pickTopping();
+    const d=document.createElement('button');d.type='button';d.className='donut';d.dataset.bite=0;
+    d.setAttribute('aria-label','סופגנייה עם '+t.name+', לחצו לנגיסה');
+    let inner='<div class="dough-wrap"><div class="dough"></div>';
+    inner+= t.id==='sugar' ? '<div class="glaze sugar"></div><div class="jelly"></div>'
+                           : '<div class="glaze" style="--glaze:'+t.glaze+'"></div>';
+    if(t.spr){
+      for(let i=0;i<14;i++){
+        const x=18+Math.random()*64,y=8+Math.random()*44,r=Math.random()*180;
+        inner+='<span class="sprinkle" style="left:'+x+'%;top:'+y+'%;background:'+sprColors[i%sprColors.length]+';transform:rotate('+r+'deg)"></span>';
+      }
+    }
+    inner+='</div>';d.innerHTML=inner;
+    d.addEventListener('click',e=>bite(d,e));
+    slot? tray.replaceChild(d,slot) : tray.appendChild(d);
+  }
+  function crumbs(x,y){
+    if(reduce) return;
+    for(let i=0;i<10;i++){
+      const c=document.createElement('span');c.className='crumb';
+      c.style.background=['#e8a45a','#f6d08f','#ff7ac6','#ffd43b','#3fd08f'][i%5];
+      c.style.left=x+'px';c.style.top=y+'px';document.body.appendChild(c);
+      const a=Math.random()*Math.PI*2,dist=30+Math.random()*50;
+      c.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+Math.cos(a)*dist+'px,'+(Math.sin(a)*dist+40)+'px) scale(.3)',opacity:0}],{duration:700,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=()=>c.remove();
+    }
+  }
+  function bite(d,e){
+    const r=d.getBoundingClientRect();crumbs(r.left+r.width*.85,r.top+r.height*.15);
+    const b=+d.dataset.bite+1;d.dataset.bite=b;
+    if(b>=3){
+      d.classList.add('gone');d.disabled=true;
+      document.getElementById('eaten').textContent=++eaten;
+      setTimeout(()=>makeDonut(d),reduce?0:550);
+    }
+  }
+  for(let i=0;i<6;i++) makeDonut();
+
+  /* ---------- copy ---------- */
+  document.getElementById('copy').addEventListener('click',()=>{
+    const txt=document.getElementById('bracha').textContent;
+    const toast=document.getElementById('toast');
+    const show=()=>{toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600)};
+    const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('bracha'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast.textContent='סומן להעתקה';show();};
+    try{navigator.clipboard.writeText(txt).then(()=>{toast.textContent='הועתק';show()},fallback)}catch(e){fallback()}
+  });
+})();
+</script>
+</body>
+</html>
